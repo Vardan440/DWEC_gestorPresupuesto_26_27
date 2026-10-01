@@ -1,10 +1,8 @@
-// TODO: Crear las funciones, objetos y variables indicadas en el enunciado
-
-// TODO: Variable global
+// Variable global
 let presupuesto = 0;
 
-function actualizarPresupuesto() {
-    if (typeof nuevoPresupuesto !== 'number' || nuevoPresupuesto <= 0) {
+function actualizarPresupuesto(nuevoPresupuesto) {
+    if (typeof nuevoPresupuesto !== 'number' || nuevoPresupuesto < 0 || Number.isNaN(nuevoPresupuesto)) {
         return -1;
     }
     presupuesto = nuevoPresupuesto;
@@ -15,31 +13,28 @@ function mostrarPresupuesto() {
     return `Tu presupuesto actual es de ${presupuesto} €`;
 }
 
-function CrearGasto() {
-    this.concepto = concepto;
+// Función constructora para crear el objeto gasto
+function CrearGasto(descripcion, valor) {
+    this.descripcion = descripcion;
     this.valor = (typeof valor === 'number' && valor > 0) ? valor : 0;
 
     this.mostrarGasto = function() {
-        return `Gasto correspondiente a ${this.concepto} con valor ${this.valor} €`;
+        return `Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €`;
     };
 
     this.actualizarDescripcion = function(nuevaDescripcion) {
-        this.concepto = nuevaDescripcion;
+        this.descripcion = nuevaDescripcion;
     };
 
     this.actualizarValor = function(nuevoValor) {
         if (typeof nuevoValor === 'number' && nuevoValor > 0) {
             this.valor = nuevoValor;
-        } else {
-            this.valor = 0;
         }
     };
 }
 
-// NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
-// Las funciones y objetos deben tener los nombres que se indican en el enunciado
-// Si al obtener el código de una práctica se genera un conflicto, por favor incluye todo el código que aparece aquí debajo
-export   {
+// NO MODIFICAR A PARTIR DE AQUÍ
+export {
     mostrarPresupuesto,
     actualizarPresupuesto,
     CrearGasto
