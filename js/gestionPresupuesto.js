@@ -1,4 +1,3 @@
-// Variable global
 let presupuesto = 0;
 
 function actualizarPresupuesto(nuevoPresupuesto) {
@@ -13,10 +12,18 @@ function mostrarPresupuesto() {
     return `Tu presupuesto actual es de ${presupuesto} €`;
 }
 
-// Función constructora para crear el objeto gasto
-function CrearGasto(descripcion, valor) {
+function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
     this.descripcion = descripcion;
     this.valor = (typeof valor === 'number' && valor > 0) ? valor : 0;
+
+    let timestampParsed = Date.parse(fecha);
+    if (isNaN(timestampParsed)) {
+        this.fecha = Date.now();
+    } else {
+        this.fecha = timestampParsed;
+    }
+
+    this.etiquetas = [];
 
     this.mostrarGasto = function() {
         return `Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €`;
@@ -31,11 +38,81 @@ function CrearGasto(descripcion, valor) {
             this.valor = nuevoValor;
         }
     };
+
+    this.mostrarGastoCompleto = function() {
+        let fechaFormateada = new Date(this.fecha).toLocaleString();
+        let resultado = `Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €.\n`;
+        resultado += `Fecha: ${fechaFormateada}\n`;
+        resultado += `Etiquetas:\n`;
+
+        for (let etiqueta of this.etiquetas) {
+            resultado += `- ${etiqueta}\n`;
+        }
+
+        return resultado;
+    };
+
+    this.actualizarFecha = function(nuevaFecha) {
+        let timestampParsed = Date.parse(nuevaFecha);
+        if (!isNaN(timestampParsed)) {
+            this.fecha = timestampParsed;
+        }
+    };
+
+    this.anyadirEtiquetas = function(...nuevasEtiquetas) {
+        for (let etiqueta of nuevasEtiquetas) {
+            if (!this.etiquetas.includes(etiqueta)) {
+                this.etiquetas.push(etiqueta);
+            }
+        }
+    };
+
+    this.borrarEtiquetas = function(...etiquetasABorrar) {
+        this.etiquetas = this.etiquetas.filter(
+            (etiqueta) => !etiquetasABorrar.includes(etiqueta)
+        );
+    };
+
+    if (etiquetas.length > 0) {
+        this.anyadirEtiquetas(...etiquetas);
+    }
 }
 
-// NO MODIFICAR A PARTIR DE AQUÍ
+let gastos = [];
+let idGasto = 0;
+
+function listarGastos() {
+    return gastos;
+}
+
+function anyadirGasto(gasto) {
+    gasto.id = idGasto;
+    idGasto++;
+    gastos.push(gasto);
+}
+
+function borrarGasto(id) {
+    let indice = gastos.findIndex((gasto) => gasto.id === id);
+    if (indice !== -1) {
+        gastos.splice(indice, 1);
+    }
+}
+
+function calcularTotalGastos() {
+    return gastos.reduce((total, gasto) => total + gasto.valor, 0);
+}
+
+function calcularBalance() {
+    return presupuesto - calcularTotalGastos();
+}
+
 export {
     mostrarPresupuesto,
     actualizarPresupuesto,
-    CrearGasto
-}   
+    CrearGasto,
+    listarGastos,
+    anyadirGasto,
+    borrarGasto,
+    calcularTotalGastos,
+    calcularBalance
+}
