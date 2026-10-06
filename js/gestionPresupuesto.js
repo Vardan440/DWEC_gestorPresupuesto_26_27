@@ -91,28 +91,10 @@ function anyadirGasto(gasto) {
     gastos.push(gasto);
 }
 
-function borrarGasto(id) {
-    let indice = gastos.findIndex((gasto) => gasto.id === id);
-    if (indice !== -1) {
-        gastos.splice(indice, 1);
-    }
-}
-
-function calcularTotalGastos() {
-    return gastos.reduce((total, gasto) => total + gasto.valor, 0);
-}
-
-function calcularBalance() {
-    return presupuesto - calcularTotalGastos();
-}
-
 export {
     mostrarPresupuesto,
     actualizarPresupuesto,
     CrearGasto,
     listarGastos,
-    anyadirGasto,
-    borrarGasto,
-    calcularTotalGastos,
-    calcularBalance
+    anyadirGasto
 }
