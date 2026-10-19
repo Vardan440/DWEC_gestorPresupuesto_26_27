@@ -1,5 +1,8 @@
+// Fundamentos 1
+
 let presupuesto = 0;
 
+// Función para actualizar el presupuesto
 function actualizarPresupuesto(nuevoPresupuesto) {
     if (typeof nuevoPresupuesto !== 'number' || nuevoPresupuesto < 0 || Number.isNaN(nuevoPresupuesto)) {
         return -1;
@@ -8,10 +11,12 @@ function actualizarPresupuesto(nuevoPresupuesto) {
     return presupuesto;
 }
 
+// Función para mostrar el presupuesto actual
 function mostrarPresupuesto() {
     return `Tu presupuesto actual es de ${presupuesto} €`;
 }
 
+// Función constructora para crear objetos gasto
 function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
     this.descripcion = descripcion;
     this.valor = (typeof valor === 'number' && valor > 0) ? valor : 0;
@@ -25,20 +30,27 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
 
     this.etiquetas = [];
 
+    // Método para mostrar el gasto
     this.mostrarGasto = function() {
         return `Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €`;
     };
 
+    // Método para actualizar la descripción
     this.actualizarDescripcion = function(nuevaDescripcion) {
         this.descripcion = nuevaDescripcion;
     };
 
+    // Método para actualizar el valor
     this.actualizarValor = function(nuevoValor) {
         if (typeof nuevoValor === 'number' && nuevoValor > 0) {
             this.valor = nuevoValor;
         }
     };
 
+
+
+    
+//FUNDAMENTOS 2
     this.mostrarGastoCompleto = function() {
         let fechaFormateada = new Date(this.fecha).toLocaleString();
         let resultado = `Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €.\n`;
@@ -76,6 +88,19 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
     if (etiquetas.length > 0) {
         this.anyadirEtiquetas(...etiquetas);
     }
+    this.obtenerPeriodoAgrupacion = function(periodo = "mes") {
+        const fechaObj = new Date(this.fecha);
+        const anio = fechaObj.getFullYear();
+        const mes = String(fechaObj.getMonth() + 1).padStart(2, '0');
+        const dia = String(fechaObj.getDate()).padStart(2, '0');
+
+        if (periodo === "dia") {
+            return `${anio}-${mes}-${dia}`;
+        } else if (periodo === "anyo") {
+            return `${anio}`;
+        }
+        return `${anio}-${mes}`;
+    };
 }
 
 let gastos = [];
