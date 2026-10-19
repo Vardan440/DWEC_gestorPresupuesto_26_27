@@ -200,6 +200,8 @@ function agruparGastos(periodo = "mes", etiquetas = [], fechaDesde = null, fecha
     }, {});
 }
 
+
+
 export {
     mostrarPresupuesto,
     actualizarPresupuesto,
@@ -208,5 +210,7 @@ export {
     anyadirGasto,
     borrarGasto,
     calcularTotalGastos,
-    calcularBalance
-}
+    calcularBalance,
+    filtrarGastos,
+    agruparGastos
+};
