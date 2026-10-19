@@ -170,6 +170,36 @@ function filtrarGastos(filtros = {}) {
     });
 }
 
+function agruparGastos(periodo = "mes", etiquetas = [], fechaDesde = null, fechaHasta = null) {
+    const filtros = {};
+
+    if (fechaDesde) {
+        filtros.fechaDesde = fechaDesde;
+    }
+
+    if (fechaHasta) {
+        filtros.fechaHasta = fechaHasta;
+    } else {
+        const hoy = new Date();
+        const anio = hoy.getFullYear();
+        const mes = String(hoy.getMonth() + 1).padStart(2, '0');
+        const dia = String(hoy.getDate()).padStart(2, '0');
+        filtros.fechaHasta = `${anio}-${mes}-${dia}`;
+    }
+
+    if (etiquetas && etiquetas.length > 0) {
+        filtros.etiquetasTiene = etiquetas;
+    }
+
+    const gastosFiltrados = filtrarGastos(filtros);
+
+    return gastosFiltrados.reduce((acc, gasto) => {
+        const clavePeriodo = gasto.obtenerPeriodoAgrupacion(periodo);
+        acc[clavePeriodo] = (acc[clavePeriodo] || 0) + gasto.valor;
+        return acc;
+    }, {});
+}
+
 export {
     mostrarPresupuesto,
     actualizarPresupuesto,
