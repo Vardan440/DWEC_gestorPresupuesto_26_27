@@ -41,6 +41,13 @@ gestionPresupuesto.anyadirGasto(gasto4);
 gestionPresupuesto.anyadirGasto(gasto5);
 gestionPresupuesto.anyadirGasto(gasto6);
 
+gestionPresupuestoWeb.mostrarGastoWeb("listado-gastos-completo", gasto1);
+gestionPresupuestoWeb.mostrarGastoWeb("listado-gastos-completo", gasto2);
+gestionPresupuestoWeb.mostrarGastoWeb("listado-gastos-completo", gasto3);
+gestionPresupuestoWeb.mostrarGastoWeb("listado-gastos-completo", gasto4);
+gestionPresupuestoWeb.mostrarGastoWeb("listado-gastos-completo", gasto5);
+gestionPresupuestoWeb.mostrarGastoWeb("listado-gastos-completo", gasto6);
+
 gestionPresupuestoWeb.mostrarDatoEnId(
     "gastos-totales",
     gestionPresupuesto.calcularTotalGastos()
